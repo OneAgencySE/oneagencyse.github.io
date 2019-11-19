@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Doing Documentation Quickly and Effectively</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/black.css" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Doing Documentation Quickly and Effectively</h1>
+        </section>
+        <section>
+          <h2>Pick a Reality</h2>
+          <p>You're busy.</p>
+          <p>You're drowning in stories.</p>
+          <p>"It's not important."</p>
+        </section>
+        <section>
+          <h2>The Truth(s)</h2>
+          <p>"It's pointless!"</p>
+          <p>"Good code explains itself." 🤨</p>
+          <p>I don't care.</p>
+        </section>
+        <section>
+          <h2>A <strong>Possible</strong>, <em>Alternative</em> Truth</h2>
+          <p>... you have no idea how to document.</p>
+        </section>
+        <section>
+          <img src="https://media.giphy.com/media/yaR8Dux1s0fAI/giphy.gif" />
+        </section>
+        <section id="breakdown">
+          <h2>Quick Breakdown</h2>
+          <h3>What do I document?</h3>
+          <ul>
+            <li>Changelog</li>
+            <li>Todos</li>
+            <li>Good commit messages</li>
+            <li>Architectural decisions</li>
+            <li>DEVELOPING.md</li>
+            <li>README.md</li>
+            <li>Comments</li>
+          </ul>
+          <p>
+            <span id="purple">automated/assisted by tooling</span> /
+            <span id="green">manual</span>
+          </p>
+        </section>
+        <section>
+          <h2>The manual stuff</h2>
+          <section>
+            <h2>Basic docs</h2>
+            <h3>README.md</h3>
+            <p>
+              <a href="https://gist.github.com/PurpleBooth/109311bb0361f32d87a2"
+                >One way to start writing one</a
+              >
+            </p>
+            <h3>DEVELOPING.md</h3>
+            <p>Don't be a douche.</p>
+		  </section>
+		  <section>
+			<h2>Comments</h2>
+			<h3>Explain the why, not the how.</h3>
+		  </section>
+          <section data-markdown>
+            <textarea data-template>
+				### You'll be judged.
+				```javascript
+				// Loop through the list and convert the values to strings
+				```
+				### You'll be loved.
+				```javascript
+				/*
+				Reasons why there is so much code here:
+				1) The API developers don't want to change the datatype to a string.
+				2) The network connection between our app and the API develops
+					strong anxiety and drops when the API tries to send more than 1kb
+					of data.
+				*/
+				```
+              </textarea
+            >
+          </section>
+        </section>
+        <section>
+          <h2>The automated stuff!</h2>
+        	<section>
+				<img src="./images/solution.png" width="40%" />
+			</section>
+        	<section data-markdown>
+				## Changelogs
+				```bash
+				npm i -g conventional-changelog-cli
+				```
+				```npm
+				{
+					"scripts": {
+						"changelogs": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0"
+					},
+					"devDependencies": {
+						"leasot": "^7.0.0"
+					}
+				}
+				```
+			</section>
+			<section data-markdown>
+				## Todos
+				```bash
+				npm i -g leasot
+				```
+				```npm
+				{
+					"scripts": {
+						"todo": "leasot 'src/**/*.js'",
+						"todo-ci": "leasot -x --reporter markdown 'src/**/*.js' > TODO.md"
+					},
+					"devDependencies": {
+						"leasot": "^7.0.0"
+					}
+				}
+				```
+			</section>
+			<section data-markdown>
+				## Commit messages
+				Read more: https://www.conventionalcommits.org/en/v1.0.0/
+				```bash
+				npm i -g husky
+				npm install --save-dev @commitlint/{config-conventional,cli}
+				```
+				```npm
+				{
+					"husky": {
+					  "hooks": {
+						"commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+					  }  
+					}
+				  }
+				```
+			</section>
+			<section>
+					## Architectural Decision Records (ADRs)
+					Read more: https://github.com/joelparkerhenderson/architecture_decision_record
+					Boilerplate: https://github.com/joelparkerhenderson/architecture_decision_record/blob/master/adr_template_by_michael_nygard.md
+			</section>
+			<section data-markdown>
+					```bash
+					# https://github.com/npryce/adr-tools
+					brew install adr-tools
+					adr init doc/architecture/decisions
+					adr new Implement as Unix shell scripts
+					```
+
+					### How to use them
+					1. Big feature
+					2. Impromptu decisions to be documented
+					3. Decisions after meetings/discussions
+			</section>
+		</section>
+		<section>
+			<h2>Not sold?</h2>
+			<h3>Think about the next person, not you.</h3>
+		</section>
+        <section>
+          <h3>kthnxbai</h3>
+          <img
+            src="https://media.giphy.com/media/xUA7aN1MTCZx97V1Ic/giphy.gif"
+          />
+        </section>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        dependencies: [
+          { src: "plugin/markdown/marked.js" },
+          { src: "plugin/markdown/markdown.js" },
+          { src: "plugin/notes/notes.js", async: true },
+          { src: "plugin/highlight/highlight.js", async: true }
+        ]
+      });
+    </script>
+  </body>
+</html>
